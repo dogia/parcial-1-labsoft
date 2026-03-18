@@ -10,12 +10,16 @@ exports.FincaModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const finca_entity_1 = require("../entity/finca.entity");
+const finca_controller_1 = require("./finca.controller");
+const finca_service_1 = require("./finca.service");
 let FincaModule = class FincaModule {
 };
 exports.FincaModule = FincaModule;
 exports.FincaModule = FincaModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([finca_entity_1.Finca])],
+        controllers: [finca_controller_1.FincaController],
+        providers: [finca_service_1.FincaService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], FincaModule);

@@ -10,12 +10,16 @@ exports.ControlHongoModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const control_hongo_entity_1 = require("../entity/control-hongo.entity");
+const control_hongo_controller_1 = require("./control-hongo.controller");
+const control_hongo_service_1 = require("./control-hongo.service");
 let ControlHongoModule = class ControlHongoModule {
 };
 exports.ControlHongoModule = ControlHongoModule;
 exports.ControlHongoModule = ControlHongoModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([control_hongo_entity_1.ControlHongo])],
+        controllers: [control_hongo_controller_1.ControlHongoController],
+        providers: [control_hongo_service_1.ControlHongoService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], ControlHongoModule);

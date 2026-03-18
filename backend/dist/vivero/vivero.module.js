@@ -10,12 +10,16 @@ exports.ViveroModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const vivero_entity_1 = require("../entity/vivero.entity");
+const vivero_controller_1 = require("./vivero.controller");
+const vivero_service_1 = require("./vivero.service");
 let ViveroModule = class ViveroModule {
 };
 exports.ViveroModule = ViveroModule;
 exports.ViveroModule = ViveroModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([vivero_entity_1.Vivero])],
+        controllers: [vivero_controller_1.ViveroController],
+        providers: [vivero_service_1.ViveroService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], ViveroModule);

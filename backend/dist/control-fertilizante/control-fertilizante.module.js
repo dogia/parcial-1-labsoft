@@ -10,12 +10,16 @@ exports.ControlFertilizanteModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const control_fertilizante_entity_1 = require("../entity/control-fertilizante.entity");
+const control_fertilizante_controller_1 = require("./control-fertilizante.controller");
+const control_fertilizante_service_1 = require("./control-fertilizante.service");
 let ControlFertilizanteModule = class ControlFertilizanteModule {
 };
 exports.ControlFertilizanteModule = ControlFertilizanteModule;
 exports.ControlFertilizanteModule = ControlFertilizanteModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([control_fertilizante_entity_1.ControlFertilizante])],
+        controllers: [control_fertilizante_controller_1.ControlFertilizanteController],
+        providers: [control_fertilizante_service_1.ControlFertilizanteService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], ControlFertilizanteModule);

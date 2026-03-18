@@ -10,12 +10,16 @@ exports.ControlPlagaModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const control_plaga_entity_1 = require("../entity/control-plaga.entity");
+const control_plaga_controller_1 = require("./control-plaga.controller");
+const control_plaga_service_1 = require("./control-plaga.service");
 let ControlPlagaModule = class ControlPlagaModule {
 };
 exports.ControlPlagaModule = ControlPlagaModule;
 exports.ControlPlagaModule = ControlPlagaModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([control_plaga_entity_1.ControlPlaga])],
+        controllers: [control_plaga_controller_1.ControlPlagaController],
+        providers: [control_plaga_service_1.ControlPlagaService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], ControlPlagaModule);
