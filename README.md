@@ -222,16 +222,18 @@ Variables de entorno relacionadas: `JWT_SECRET`, `JWT_EXPIRES_IN` (por defecto `
 | `PUT` | `/productos-control/:productoId/control-fertilizante` | Actualizar control de fertilizante |
 | `DELETE` | `/productos-control/:productoId/control-fertilizante` | Eliminar control de fertilizante |
 
-### Reportes en PDF
+### Reportes en PDF y Excel
 
-Estas rutas devuelven el reporte como `application/pdf` con cabecera `Content-Disposition: attachment`. El acceso requiere autenticacion pero no se restringe por rol: cualquier administrador o empleado puede descargarlos. Implementadas en el modulo `reportes` con `pdfkit`.
+Estas rutas devuelven el reporte como `application/pdf` o `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` con cabecera `Content-Disposition: attachment`. El acceso requiere autenticacion pero no se restringe por rol: cualquier administrador o empleado puede descargarlos. Implementadas en el modulo `reportes` con `pdfkit` y `exceljs`.
 
 | Verbo | Ruta | Accion |
 |---|---|---|
-| `GET` | `/reportes/viveros/:codigo/labores/pdf` | Descargar el reporte de labores de un vivero (incluye contexto de finca y productor) |
-| `GET` | `/reportes/productores/:documento/viveros/pdf` | Descargar el reporte de viveros que pertenecen a un productor |
+| `GET` | `/reportes/viveros/:codigo/labores/pdf` | Reporte de labores de un vivero (PDF) |
+| `GET` | `/reportes/viveros/:codigo/labores/excel` | Reporte de labores de un vivero (Excel) |
+| `GET` | `/reportes/productores/:documento/viveros/pdf` | Reporte de viveros de un productor (PDF) |
+| `GET` | `/reportes/productores/:documento/viveros/excel` | Reporte de viveros de un productor (Excel) |
 
-Si el vivero o el productor no existe, la respuesta es 404 y no se genera ningun PDF.
+Si el vivero o el productor no existe, la respuesta es 404 y no se genera ningun archivo.
 
 ---
 
