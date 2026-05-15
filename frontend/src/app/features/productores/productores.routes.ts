@@ -16,6 +16,9 @@ export const PRODUCTORES_ROUTES: Routes = [
     path: ':documento/editar',
     canActivate: [adminGuard],
     loadComponent: () => import('./productor-form/productor-form').then((m) => m.ProductorForm),
-    data: {},
+  },
+  {
+    path: ':documento/fincas',
+    loadChildren: () => import('../fincas/fincas.routes').then((m) => m.FINCAS_ROUTES),
   },
 ];
