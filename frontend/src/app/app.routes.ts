@@ -20,6 +20,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/productores/productores.routes').then((m) => m.PRODUCTORES_ROUTES),
       },
+      {
+        path: 'viveros/:codigo/labores',
+        loadChildren: () =>
+          import('./features/labores/labores.routes').then((m) => m.LABORES_ROUTES),
+      },
     ],
   },
   {
