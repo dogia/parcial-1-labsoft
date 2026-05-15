@@ -10,6 +10,7 @@ import { ProductoControlModule } from './producto-control/producto-control.modul
 import { ControlPlagaModule } from './control-plaga/control-plaga.module';
 import { ControlHongoModule } from './control-hongo/control-hongo.module';
 import { ControlFertilizanteModule } from './control-fertilizante/control-fertilizante.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ControlFertilizanteModule } from './control-fertilizante/control-fertil
     ControlPlagaModule,
     ControlHongoModule,
     ControlFertilizanteModule,
+    UsuarioModule,
   ],
   controllers: [AppController],
   providers: [AppService],
