@@ -3,6 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Labor } from '../entity/labor.entity';
 
+const LABOR_RELATIONS = [
+  'producto',
+  'producto.controlPlaga',
+  'producto.controlHongo',
+  'producto.controlFertilizante',
+];
+
 @Injectable()
 export class LaborService {
   constructor(
@@ -11,11 +18,18 @@ export class LaborService {
   ) {}
 
   findAllByVivero(viveroId: string): Promise<Labor[]> {
-    return this.laborRepository.findBy({ vivero_id: viveroId });
+    return this.laborRepository.find({
+      where: { vivero_id: viveroId },
+      relations: LABOR_RELATIONS,
+      order: { fecha: 'DESC' },
+    });
   }
 
   async findOne(id: number): Promise<Labor> {
-    const labor = await this.laborRepository.findOneBy({ id });
+    const labor = await this.laborRepository.findOne({
+      where: { id },
+      relations: LABOR_RELATIONS,
+    });
     if (!labor) {
       throw new NotFoundException(`Labor con id ${id} no encontrada`);
     }
