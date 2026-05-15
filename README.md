@@ -222,6 +222,17 @@ Variables de entorno relacionadas: `JWT_SECRET`, `JWT_EXPIRES_IN` (por defecto `
 | `PUT` | `/productos-control/:productoId/control-fertilizante` | Actualizar control de fertilizante |
 | `DELETE` | `/productos-control/:productoId/control-fertilizante` | Eliminar control de fertilizante |
 
+### Reportes en PDF
+
+Estas rutas devuelven el reporte como `application/pdf` con cabecera `Content-Disposition: attachment`. El acceso requiere autenticacion pero no se restringe por rol: cualquier administrador o empleado puede descargarlos. Implementadas en el modulo `reportes` con `pdfkit`.
+
+| Verbo | Ruta | Accion |
+|---|---|---|
+| `GET` | `/reportes/viveros/:codigo/labores/pdf` | Descargar el reporte de labores de un vivero (incluye contexto de finca y productor) |
+| `GET` | `/reportes/productores/:documento/viveros/pdf` | Descargar el reporte de viveros que pertenecen a un productor |
+
+Si el vivero o el productor no existe, la respuesta es 404 y no se genera ningun PDF.
+
 ---
 
 ## Estructura del Proyecto

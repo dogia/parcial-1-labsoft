@@ -8,6 +8,6 @@ import { LaborService } from './labor.service';
   imports: [TypeOrmModule.forFeature([Labor])],
   controllers: [LaborController],
   providers: [LaborService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, LaborService],
 })
 export class LaborModule {}
