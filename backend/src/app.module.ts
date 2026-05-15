@@ -12,6 +12,7 @@ import { ControlHongoModule } from './control-hongo/control-hongo.module';
 import { ControlFertilizanteModule } from './control-fertilizante/control-fertilizante.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
+import { ReportesModule } from './reportes/reportes.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { AuthModule } from './auth/auth.module';
     ControlFertilizanteModule,
     UsuarioModule,
     AuthModule,
+    ReportesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
