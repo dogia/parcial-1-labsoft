@@ -9,6 +9,6 @@ import { ViveroModule } from '../vivero/vivero.module';
   imports: [TypeOrmModule.forFeature([Productor]), ViveroModule],
   controllers: [ProductorController],
   providers: [ProductorService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ProductorService],
 })
 export class ProductorModule {}
