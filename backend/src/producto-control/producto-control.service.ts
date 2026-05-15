@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductoControl } from '../entity/producto-control.entity';
 
+const RELACIONES = ['controlPlaga', 'controlHongo', 'controlFertilizante'];
+
 @Injectable()
 export class ProductoControlService {
   constructor(
@@ -11,11 +13,17 @@ export class ProductoControlService {
   ) {}
 
   findAll(): Promise<ProductoControl[]> {
-    return this.productoControlRepository.find();
+    return this.productoControlRepository.find({
+      relations: RELACIONES,
+      order: { id: 'ASC' },
+    });
   }
 
   async findOne(id: number): Promise<ProductoControl> {
-    const producto = await this.productoControlRepository.findOneBy({ id });
+    const producto = await this.productoControlRepository.findOne({
+      where: { id },
+      relations: RELACIONES,
+    });
     if (!producto) {
       throw new NotFoundException(`Producto de control con id ${id} no encontrado`);
     }

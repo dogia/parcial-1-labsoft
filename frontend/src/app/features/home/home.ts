@@ -11,7 +11,12 @@ const ACCESOS: AccesoRapido[] = [
   {
     ruta: '/productores',
     titulo: 'Productores',
-    descripcion: 'Gestione los productores que utilizan el sistema.',
+    descripcion: 'Gestione los productores y sus fincas, viveros y labores.',
+  },
+  {
+    ruta: '/productos-control',
+    titulo: 'Productos de control',
+    descripcion: 'Catalogo de productos de plaga, hongo y fertilizante.',
   },
 ];
 

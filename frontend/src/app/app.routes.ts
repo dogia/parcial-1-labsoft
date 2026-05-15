@@ -25,6 +25,13 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/labores/labores.routes').then((m) => m.LABORES_ROUTES),
       },
+      {
+        path: 'productos-control',
+        loadChildren: () =>
+          import('./features/productos-control/productos-control.routes').then(
+            (m) => m.PRODUCTOS_CONTROL_ROUTES,
+          ),
+      },
     ],
   },
   {
