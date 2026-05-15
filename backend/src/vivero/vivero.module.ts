@@ -8,6 +8,6 @@ import { ViveroService } from './vivero.service';
   imports: [TypeOrmModule.forFeature([Vivero])],
   controllers: [ViveroController],
   providers: [ViveroService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ViveroService],
 })
 export class ViveroModule {}
