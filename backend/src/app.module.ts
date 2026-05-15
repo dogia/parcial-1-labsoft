@@ -11,6 +11,7 @@ import { ControlPlagaModule } from './control-plaga/control-plaga.module';
 import { ControlHongoModule } from './control-hongo/control-hongo.module';
 import { ControlFertilizanteModule } from './control-fertilizante/control-fertilizante.module';
 import { UsuarioModule } from './usuario/usuario.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     ControlHongoModule,
     ControlFertilizanteModule,
     UsuarioModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -129,6 +129,14 @@ Las pruebas de relaciones utilizan una base de datos SQLite en memoria para veri
 
 La API expone rutas anidadas que reflejan las relaciones entre entidades. Todas las respuestas son en formato JSON.
 
+### Autenticacion
+
+| Verbo | Ruta | Accion |
+|---|---|---|
+| `POST` | `/auth/login` | Inicia sesion con `{ correo, password }` y devuelve un JWT |
+
+Variables de entorno relacionadas: `JWT_SECRET`, `JWT_EXPIRES_IN` (por defecto `1h`).
+
 ### Productores
 
 | Verbo | Ruta | Accion |
