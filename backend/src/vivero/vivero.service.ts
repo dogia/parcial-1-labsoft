@@ -14,6 +14,15 @@ export class ViveroService {
     return this.viveroRepository.findBy({ finca_id: fincaId });
   }
 
+  findAllByProductor(documento: string): Promise<Vivero[]> {
+    return this.viveroRepository
+      .createQueryBuilder('vivero')
+      .innerJoin('vivero.finca', 'finca')
+      .where('finca.productor_id = :documento', { documento })
+      .orderBy('vivero.codigo', 'ASC')
+      .getMany();
+  }
+
   async findOne(codigo: string): Promise<Vivero> {
     const vivero = await this.viveroRepository.findOneBy({ codigo });
     if (!vivero) {
