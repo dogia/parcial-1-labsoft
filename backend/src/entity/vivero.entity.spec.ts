@@ -15,10 +15,16 @@ describe('Vivero Entity', () => {
 
   it('debe asignar todas las propiedades correctamente', () => {
     vivero.codigo = 'VIV-001';
+    vivero.nombre = 'Vivero El Eden';
+    vivero.departamento = 'Risaralda';
+    vivero.municipio = 'Pereira';
     vivero.tipo_cultivo = 'Café';
     vivero.finca_id = 'CAT-001';
 
     expect(vivero.codigo).toBe('VIV-001');
+    expect(vivero.nombre).toBe('Vivero El Eden');
+    expect(vivero.departamento).toBe('Risaralda');
+    expect(vivero.municipio).toBe('Pereira');
     expect(vivero.tipo_cultivo).toBe('Café');
     expect(vivero.finca_id).toBe('CAT-001');
   });

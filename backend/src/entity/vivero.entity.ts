@@ -8,6 +8,15 @@ export class Vivero {
   codigo: string;
 
   @Column({ nullable: false })
+  nombre: string;
+
+  @Column({ nullable: false })
+  departamento: string;
+
+  @Column({ nullable: false })
+  municipio: string;
+
+  @Column({ nullable: false })
   tipo_cultivo: string;
 
   @Column({ nullable: false })
