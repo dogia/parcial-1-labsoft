@@ -72,7 +72,9 @@ export class ReportesService {
       return `Hongo: ${producto.controlHongo.nombre_hongo}`;
     }
     if (producto.controlFertilizante) {
-      const fecha = this.formatearFecha(producto.controlFertilizante.fecha_ultima_aplicacion);
+      const fecha = this.formatearFecha(
+        producto.controlFertilizante.fecha_ultima_aplicacion,
+      );
       return `Ultima aplicacion: ${fecha}`;
     }
     return '-';
@@ -89,12 +91,20 @@ export class ReportesService {
     });
   }
 
-  async generarViverosPorProductorPdf(documentoProductor: string): Promise<Buffer> {
+  async generarViverosPorProductorPdf(
+    documentoProductor: string,
+  ): Promise<Buffer> {
     const productor = await this.productorService.findOne(documentoProductor);
-    const viveros = await this.viveroService.findAllByProductor(documentoProductor);
+    const viveros =
+      await this.viveroService.findAllByProductor(documentoProductor);
 
     return this.pdfABuffer((doc) => {
-      this.dibujarEncabezadoViveros(doc, productor.nombre, productor.apellido, productor.documento);
+      this.dibujarEncabezadoViveros(
+        doc,
+        productor.nombre,
+        productor.apellido,
+        productor.documento,
+      );
       this.dibujarTablaViveros(doc, viveros);
       this.dibujarPiePagina(doc);
     });
@@ -109,14 +119,27 @@ export class ReportesService {
     doc
       .font('Helvetica-Bold')
       .fontSize(18)
-      .text(`Viveros del productor ${nombre} ${apellido} (documento ${documento})`, {
-        align: 'left',
-      });
+      .text(
+        `Viveros del productor ${nombre} ${apellido} (documento ${documento})`,
+        {
+          align: 'left',
+        },
+      );
     doc.moveDown();
   }
 
-  private dibujarTablaViveros(doc: PDFKit.PDFDocument, viveros: Vivero[]): void {
-    const encabezados = ['Codigo', 'Nombre', 'Departamento', 'Municipio', 'Tipo cultivo', 'Finca'];
+  private dibujarTablaViveros(
+    doc: PDFKit.PDFDocument,
+    viveros: Vivero[],
+  ): void {
+    const encabezados = [
+      'Codigo',
+      'Nombre',
+      'Departamento',
+      'Municipio',
+      'Tipo cultivo',
+      'Finca',
+    ];
     const anchos = [60, 100, 90, 80, 80, 80];
 
     this.dibujarFilaEncabezado(doc, encabezados, anchos);
@@ -145,12 +168,20 @@ export class ReportesService {
 
   // ----- Helpers de layout -----
 
-  private dibujarEncabezadoLabores(doc: PDFKit.PDFDocument, vivero: Vivero): void {
-    doc.font('Helvetica-Bold').fontSize(18).text('Reporte de Labores', { align: 'left' });
+  private dibujarEncabezadoLabores(
+    doc: PDFKit.PDFDocument,
+    vivero: Vivero,
+  ): void {
+    doc
+      .font('Helvetica-Bold')
+      .fontSize(18)
+      .text('Reporte de Labores', { align: 'left' });
     doc.moveDown(0.3);
 
     const productor = vivero.finca?.productor;
-    const nombreProductor = productor ? `${productor.nombre} ${productor.apellido}` : '-';
+    const nombreProductor = productor
+      ? `${productor.nombre} ${productor.apellido}`
+      : '-';
     const numeroFinca = vivero.finca?.numero_catastro ?? '-';
 
     doc.font('Helvetica').fontSize(11);
@@ -170,7 +201,10 @@ export class ReportesService {
 
     if (labores.length === 0) {
       doc.moveDown();
-      doc.font('Helvetica-Oblique').fontSize(10).text('Sin labores registradas.');
+      doc
+        .font('Helvetica-Oblique')
+        .fontSize(10)
+        .text('Sin labores registradas.');
       return;
     }
 
