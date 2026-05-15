@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { ProductoControlService } from './producto-control.service';
 import { ProductoControl } from '../entity/producto-control.entity';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolUsuario } from '../entity/usuario.entity';
 
 @Controller('productos-control')
 export class ProductoControlController {
@@ -17,16 +19,22 @@ export class ProductoControlController {
   }
 
   @Post()
+  @Roles(RolUsuario.ADMIN)
   create(@Body() data: Partial<ProductoControl>): Promise<ProductoControl> {
     return this.productoControlService.create(data);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() data: Partial<ProductoControl>): Promise<ProductoControl> {
+  @Roles(RolUsuario.ADMIN)
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: Partial<ProductoControl>,
+  ): Promise<ProductoControl> {
     return this.productoControlService.update(id, data);
   }
 
   @Delete(':id')
+  @Roles(RolUsuario.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.productoControlService.remove(id);
   }
