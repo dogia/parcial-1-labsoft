@@ -126,12 +126,15 @@ cd backend
 npm test
 ```
 
-El proyecto cuenta con **45 pruebas unitarias**:
+Backend: **50 pruebas unitarias** (8 entidades + 21 de relaciones + nuevas suites). Las pruebas de relaciones utilizan SQLite en memoria para verificar los metadatos de TypeORM sin necesidad de PostgreSQL.
 
-- **24 pruebas** de entidades (3 por cada una de las 8 entidades)
-- **21 pruebas** de relaciones entre entidades
+```bash
+cd frontend
+npm test
+npm run lint
+```
 
-Las pruebas de relaciones utilizan una base de datos SQLite en memoria para verificar los metadatos de TypeORM sin necesidad de PostgreSQL.
+Frontend: pruebas con Vitest (`App` + `AuthService`) y validacion estatica con ESLint + angular-eslint.
 
 ---
 
@@ -261,16 +264,10 @@ backend/
 │   │   ├── control-plaga.entity.ts
 │   │   ├── control-hongo.entity.ts
 │   │   ├── control-fertilizante.entity.ts
-│   │   ├── productor.entity.spec.ts     # Tests unitarios
-│   │   ├── finca.entity.spec.ts
-│   │   ├── vivero.entity.spec.ts
-│   │   ├── labor.entity.spec.ts
-│   │   ├── producto-control.entity.spec.ts
-│   │   ├── control-plaga.entity.spec.ts
-│   │   ├── control-hongo.entity.spec.ts
-│   │   ├── control-fertilizante.entity.spec.ts
+│   │   ├── usuario.entity.ts
+│   │   ├── *.entity.spec.ts             # Tests unitarios por entidad
 │   │   └── relations.spec.ts           # Tests de relaciones
-│   ├── productor/                       # Modulo, controlador y servicio
+│   ├── productor/                       # Modulo, controlador, servicio
 │   ├── finca/
 │   ├── vivero/
 │   ├── labor/
@@ -278,12 +275,34 @@ backend/
 │   ├── control-plaga/
 │   ├── control-hongo/
 │   ├── control-fertilizante/
+│   ├── usuario/                         # CRUD de usuarios (solo ADMIN)
+│   ├── auth/                            # Login JWT + guards globales
+│   ├── reportes/                        # Exportacion PDF y Excel
 │   ├── app.module.ts
-│   └── main.ts
-├── docs/                                # Diagramas UML y ER
+│   ├── main.ts                          # Bootstrap + ValidationPipe + CORS
+│   └── seed.ts                          # Crea el primer ADMIN ("npm run seed")
+├── .env.example                         # Plantilla de variables de entorno
 ├── Dockerfile
 ├── docker-compose.yml
 └── package.json
+
+frontend/
+├── src/app/
+│   ├── core/                            # Servicios globales (auth, modelos)
+│   ├── shared/                          # Componentes presentacionales
+│   ├── features/                        # Vistas por dominio
+│   │   ├── auth/login
+│   │   ├── productores, fincas, viveros, labores, productos-control
+│   │   └── reportes
+│   └── app.{ts,html,routes,config}.ts
+├── proxy.conf.json
+└── package.json
+
+docs/
+├── historias/                           # 18 historias de usuario HU01-HU18
+├── requisitos.md
+├── modelo_entidad_relación.png
+└── uml_diagram.png
 ```
 
 ---
