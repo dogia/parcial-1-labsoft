@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import PDFDocument = require('pdfkit');
+import * as ExcelJS from 'exceljs';
 import { Vivero } from '../entity/vivero.entity';
 import { Labor } from '../entity/labor.entity';
 import { LaborService } from '../labor/labor.service';
@@ -108,6 +109,127 @@ export class ReportesService {
       this.dibujarTablaViveros(doc, viveros);
       this.dibujarPiePagina(doc);
     });
+  }
+
+  async generarLaboresPorViveroExcel(codigoVivero: string): Promise<Buffer> {
+    const vivero = await this.cargarViveroConContexto(codigoVivero);
+    const labores = await this.laborService.findAllByVivero(codigoVivero);
+
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'Sistema de Viveros';
+    workbook.created = new Date();
+    const hoja = workbook.addWorksheet('Labores');
+
+    hoja.mergeCells('A1:E1');
+    const titulo = hoja.getCell('A1');
+    titulo.value = `Labores del vivero ${vivero.codigo} - ${vivero.nombre}`;
+    titulo.font = { bold: true, size: 14 };
+
+    hoja.getCell('A2').value = 'Ubicacion';
+    hoja.getCell('B2').value = `${vivero.departamento}, ${vivero.municipio}`;
+    hoja.getCell('A3').value = 'Finca';
+    hoja.getCell('B3').value = vivero.finca?.numero_catastro ?? '-';
+    hoja.getCell('A4').value = 'Productor';
+    hoja.getCell('B4').value = vivero.finca?.productor
+      ? `${vivero.finca.productor.nombre} ${vivero.finca.productor.apellido}`
+      : '-';
+
+    hoja.addRow([]);
+    const encabezado = hoja.addRow([
+      'Fecha',
+      'Descripcion',
+      'Producto',
+      'Tipo',
+      'Detalle',
+    ]);
+    encabezado.font = { bold: true };
+    encabezado.eachCell((celda) => {
+      celda.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFE2E8F0' },
+      };
+    });
+
+    for (const labor of labores) {
+      hoja.addRow([
+        this.formatearFecha(labor.fecha),
+        labor.descripcion ?? '-',
+        labor.producto?.nombre ?? '-',
+        labor.producto?.tipo ?? '-',
+        this.describirSubTipo(labor),
+      ]);
+    }
+
+    hoja.columns = [
+      { width: 12 },
+      { width: 40 },
+      { width: 25 },
+      { width: 15 },
+      { width: 35 },
+    ];
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    return Buffer.from(buffer);
+  }
+
+  async generarViverosPorProductorExcel(
+    documentoProductor: string,
+  ): Promise<Buffer> {
+    const productor = await this.productorService.findOne(documentoProductor);
+    const viveros =
+      await this.viveroService.findAllByProductor(documentoProductor);
+
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'Sistema de Viveros';
+    workbook.created = new Date();
+    const hoja = workbook.addWorksheet('Viveros');
+
+    hoja.mergeCells('A1:F1');
+    const titulo = hoja.getCell('A1');
+    titulo.value = `Viveros del productor ${productor.nombre} ${productor.apellido} (${productor.documento})`;
+    titulo.font = { bold: true, size: 14 };
+
+    hoja.addRow([]);
+    const encabezado = hoja.addRow([
+      'Codigo',
+      'Nombre',
+      'Departamento',
+      'Municipio',
+      'Tipo cultivo',
+      'Finca',
+    ]);
+    encabezado.font = { bold: true };
+    encabezado.eachCell((celda) => {
+      celda.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFE2E8F0' },
+      };
+    });
+
+    for (const vivero of viveros) {
+      hoja.addRow([
+        vivero.codigo,
+        vivero.nombre ?? '-',
+        vivero.departamento ?? '-',
+        vivero.municipio ?? '-',
+        vivero.tipo_cultivo ?? '-',
+        vivero.finca_id ?? '-',
+      ]);
+    }
+
+    hoja.columns = [
+      { width: 15 },
+      { width: 25 },
+      { width: 18 },
+      { width: 18 },
+      { width: 18 },
+      { width: 18 },
+    ];
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    return Buffer.from(buffer);
   }
 
   private dibujarEncabezadoViveros(
