@@ -16,4 +16,8 @@ export const FINCAS_ROUTES: Routes = [
     canActivate: [adminGuard],
     loadComponent: () => import('./finca-form/finca-form').then((m) => m.FincaForm),
   },
+  {
+    path: ':numeroCatastro/viveros',
+    loadChildren: () => import('../viveros/viveros.routes').then((m) => m.VIVEROS_ROUTES),
+  },
 ];
