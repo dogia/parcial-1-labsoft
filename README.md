@@ -137,6 +137,13 @@ La API expone rutas anidadas que reflejan las relaciones entre entidades. Todas 
 
 Variables de entorno relacionadas: `JWT_SECRET`, `JWT_EXPIRES_IN` (por defecto `1h`).
 
+### Convencion de autorizacion
+
+- Todas las rutas requieren `Authorization: Bearer <token>` salvo las marcadas con `@Public()` (login).
+- Las operaciones de escritura (`POST`, `PUT`, `DELETE`) requieren rol `ADMIN`.
+- Las consultas (`GET`) estan abiertas a cualquier usuario autenticado.
+- La gestion de usuarios (`/usuarios/*`) esta completamente restringida a `ADMIN`.
+
 ### Productores
 
 | Verbo | Ruta | Accion |

@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { FincaService } from './finca.service';
 import { Finca } from '../entity/finca.entity';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolUsuario } from '../entity/usuario.entity';
 
 @Controller('productores/:documento/fincas')
 export class FincaController {
@@ -17,16 +19,22 @@ export class FincaController {
   }
 
   @Post()
+  @Roles(RolUsuario.ADMIN)
   create(@Param('documento') documento: string, @Body() data: Partial<Finca>): Promise<Finca> {
     return this.fincaService.create(documento, data);
   }
 
   @Put(':numeroCatastro')
-  update(@Param('numeroCatastro') numeroCatastro: string, @Body() data: Partial<Finca>): Promise<Finca> {
+  @Roles(RolUsuario.ADMIN)
+  update(
+    @Param('numeroCatastro') numeroCatastro: string,
+    @Body() data: Partial<Finca>,
+  ): Promise<Finca> {
     return this.fincaService.update(numeroCatastro, data);
   }
 
   @Delete(':numeroCatastro')
+  @Roles(RolUsuario.ADMIN)
   remove(@Param('numeroCatastro') numeroCatastro: string): Promise<void> {
     return this.fincaService.remove(numeroCatastro);
   }

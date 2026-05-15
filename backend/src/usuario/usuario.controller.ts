@@ -2,8 +2,11 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { UsuarioService, UsuarioSinPassword } from './usuario.service';
 import { CrearUsuarioDto } from './dto/crear-usuario.dto';
 import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolUsuario } from '../entity/usuario.entity';
 
 @Controller('usuarios')
+@Roles(RolUsuario.ADMIN)
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
