@@ -135,6 +135,7 @@ La API expone rutas anidadas que reflejan las relaciones entre entidades. Todas 
 |---|---|---|
 | `GET` | `/productores` | Listar todos los productores |
 | `GET` | `/productores/:documento` | Obtener detalle de un productor |
+| `GET` | `/productores/:documento/viveros` | Listar todos los viveros de un productor (consulta b del enunciado) |
 | `POST` | `/productores` | Crear un nuevo productor |
 | `PUT` | `/productores/:documento` | Actualizar un productor |
 | `DELETE` | `/productores/:documento` | Eliminar un productor |
