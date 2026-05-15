@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideHttpClient()],
     }).compileComponents();
   });
 
@@ -20,5 +22,12 @@ describe('App', () => {
     fixture.detectChanges();
     const heading = (fixture.nativeElement as HTMLElement).querySelector('h1');
     expect(heading?.textContent).toContain('Sistema de Administracion de Viveros');
+  });
+
+  it('no muestra el boton de cerrar sesion cuando no hay usuario', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const boton = (fixture.nativeElement as HTMLElement).querySelector('button');
+    expect(boton).toBeNull();
   });
 });

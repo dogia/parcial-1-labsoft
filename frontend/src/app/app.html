@@ -1,6 +1,24 @@
 <div class="min-h-screen flex flex-col">
-  <header class="bg-emerald-700 text-white px-6 py-4 shadow">
+  <header class="bg-emerald-700 text-white px-6 py-4 shadow flex items-center justify-between">
     <h1 class="text-xl font-semibold">Sistema de Administracion de Viveros</h1>
+
+    @if (auth.estaAutenticado()) {
+      <div class="flex items-center gap-4 text-sm">
+        <span class="text-emerald-100">
+          {{ auth.usuarioActual()?.nombre }}
+          <span class="ml-1 text-xs bg-emerald-900 px-2 py-0.5 rounded-full uppercase">
+            {{ auth.usuarioActual()?.rol }}
+          </span>
+        </span>
+        <button
+          type="button"
+          (click)="cerrarSesion()"
+          class="bg-emerald-800 hover:bg-emerald-900 px-3 py-1 rounded transition"
+        >
+          Cerrar sesion
+        </button>
+      </div>
+    }
   </header>
 
   <main class="flex-1 p-6">
