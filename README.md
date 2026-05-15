@@ -76,6 +76,7 @@ Los diagramas UML y entidad-relacion se encuentran en la carpeta `docs/`.
 ```bash
 cd backend
 npm install
+cp .env.example .env   # ajuste credenciales y JWT_SECRET si lo desea
 ```
 
 Crear la base de datos en PostgreSQL:
@@ -90,11 +91,20 @@ Ejecutar en modo desarrollo:
 npm run start:dev
 ```
 
+Crear el primer usuario administrador (lee las variables `SEED_ADMIN_*` del `.env`):
+
+```bash
+npm run seed
+```
+
+Por defecto se crea `admin@viveros.local / Admin123!`. Cambie la contrasena tras el primer ingreso.
+
 Alternativa con Docker:
 
 ```bash
 cd backend
-docker-compose up --build
+docker-compose up --build -d
+docker-compose exec app npm run seed:prod
 ```
 
 ### Frontend
