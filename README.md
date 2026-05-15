@@ -71,7 +71,7 @@ Los diagramas UML y entidad-relacion se encuentran en la carpeta `docs/`.
 
 ## Instalacion y Ejecucion
 
-### Opcion 1: Local
+### Backend
 
 ```bash
 cd backend
@@ -90,14 +90,22 @@ Ejecutar en modo desarrollo:
 npm run start:dev
 ```
 
-### Opcion 2: Docker
+Alternativa con Docker:
 
 ```bash
 cd backend
 docker-compose up --build
 ```
 
-Esto levanta PostgreSQL y la aplicacion NestJS automaticamente.
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+El servidor de desarrollo queda disponible en `http://localhost:4200` con proxy hacia el backend en `http://localhost:3000`.
 
 ---
 
