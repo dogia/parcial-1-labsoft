@@ -89,11 +89,58 @@ export class ReportesService {
     });
   }
 
-  async generarViverosPorProductorPdf(_documentoProductor: string): Promise<Buffer> {
-    // La implementacion concreta se agrega en el siguiente commit.
-    void this.viveroService;
-    void this.productorService;
-    throw new Error('No implementado');
+  async generarViverosPorProductorPdf(documentoProductor: string): Promise<Buffer> {
+    const productor = await this.productorService.findOne(documentoProductor);
+    const viveros = await this.viveroService.findAllByProductor(documentoProductor);
+
+    return this.pdfABuffer((doc) => {
+      this.dibujarEncabezadoViveros(doc, productor.nombre, productor.apellido, productor.documento);
+      this.dibujarTablaViveros(doc, viveros);
+      this.dibujarPiePagina(doc);
+    });
+  }
+
+  private dibujarEncabezadoViveros(
+    doc: PDFKit.PDFDocument,
+    nombre: string,
+    apellido: string,
+    documento: string,
+  ): void {
+    doc
+      .font('Helvetica-Bold')
+      .fontSize(18)
+      .text(`Viveros del productor ${nombre} ${apellido} (documento ${documento})`, {
+        align: 'left',
+      });
+    doc.moveDown();
+  }
+
+  private dibujarTablaViveros(doc: PDFKit.PDFDocument, viveros: Vivero[]): void {
+    const encabezados = ['Codigo', 'Nombre', 'Departamento', 'Municipio', 'Tipo cultivo', 'Finca'];
+    const anchos = [60, 100, 90, 80, 80, 80];
+
+    this.dibujarFilaEncabezado(doc, encabezados, anchos);
+
+    if (viveros.length === 0) {
+      doc.moveDown();
+      doc
+        .font('Helvetica-Oblique')
+        .fontSize(10)
+        .text('El productor no tiene viveros asociados.');
+      return;
+    }
+
+    for (const vivero of viveros) {
+      const fila = [
+        vivero.codigo,
+        vivero.nombre ?? '-',
+        vivero.departamento ?? '-',
+        vivero.municipio ?? '-',
+        vivero.tipo_cultivo ?? '-',
+        vivero.finca_id ?? '-',
+      ];
+      this.dibujarFilaDatos(doc, fila, anchos);
+    }
   }
 
   // ----- Helpers de layout -----
