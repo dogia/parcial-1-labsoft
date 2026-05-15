@@ -3,6 +3,8 @@ import { ProductorService } from './productor.service';
 import { ViveroService } from '../vivero/vivero.service';
 import { Productor } from '../entity/productor.entity';
 import { Vivero } from '../entity/vivero.entity';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolUsuario } from '../entity/usuario.entity';
 
 @Controller('productores')
 export class ProductorController {
@@ -28,11 +30,13 @@ export class ProductorController {
   }
 
   @Post()
+  @Roles(RolUsuario.ADMIN)
   create(@Body() data: Partial<Productor>): Promise<Productor> {
     return this.productorService.create(data);
   }
 
   @Put(':documento')
+  @Roles(RolUsuario.ADMIN)
   update(
     @Param('documento') documento: string,
     @Body() data: Partial<Productor>,
@@ -41,6 +45,7 @@ export class ProductorController {
   }
 
   @Delete(':documento')
+  @Roles(RolUsuario.ADMIN)
   remove(@Param('documento') documento: string): Promise<void> {
     return this.productorService.remove(documento);
   }
