@@ -9,8 +9,18 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
-    pathMatch: 'full',
-    loadComponent: () => import('./features/home/home').then((m) => m.Home),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/home/home').then((m) => m.Home),
+      },
+      {
+        path: 'productores',
+        loadChildren: () =>
+          import('./features/productores/productores.routes').then((m) => m.PRODUCTORES_ROUTES),
+      },
+    ],
   },
   {
     path: '**',
