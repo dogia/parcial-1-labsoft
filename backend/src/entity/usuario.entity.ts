@@ -19,7 +19,9 @@ export class Usuario {
   @Column({ name: 'password_hash', nullable: false })
   passwordHash: string;
 
-  @Column({ type: 'enum', enum: RolUsuario, nullable: false })
+  // simple-enum se mapea a enum nativo en Postgres y a TEXT con check
+  // constraint en SQLite, permitiendo ejecutar las pruebas E2E sin Postgres.
+  @Column({ type: 'simple-enum', enum: RolUsuario, nullable: false })
   rol: RolUsuario;
 
   @Column({ default: true })
