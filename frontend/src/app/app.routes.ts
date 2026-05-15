@@ -32,6 +32,11 @@ export const routes: Routes = [
             (m) => m.PRODUCTOS_CONTROL_ROUTES,
           ),
       },
+      {
+        path: 'reportes',
+        loadChildren: () =>
+          import('./features/reportes/reportes.routes').then((m) => m.REPORTES_ROUTES),
+      },
     ],
   },
   {

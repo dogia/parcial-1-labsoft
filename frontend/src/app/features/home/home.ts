@@ -18,6 +18,11 @@ const ACCESOS: AccesoRapido[] = [
     titulo: 'Productos de control',
     descripcion: 'Catalogo de productos de plaga, hongo y fertilizante.',
   },
+  {
+    ruta: '/reportes',
+    titulo: 'Reportes',
+    descripcion: 'Descargue los informes de labores y viveros en PDF o Excel.',
+  },
 ];
 
 @Component({
